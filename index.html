@@ -1,0 +1,583 @@
+<html>
+
+<head>
+	<title>Table test</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+
+	<style type="text/css">
+
+		table{
+			border-collapse: collapse;
+			padding: 0px;
+		}
+
+		tr, th, td{
+			padding: 0px;
+		}
+
+		.equipment-size{
+			width: 100%;
+			height: 100%;
+		}
+
+		.hp_line, .mana_line{
+			height: 12px;
+			box-shadow: 0 0 3px #000 inset;
+			background: #aaa;
+			margin-bottom: 1px;
+			position: relative;
+		}
+
+		.hp_fill{
+			height: 100%;
+			width: 100%;
+			background: #04ab17;
+			box-shadow: 0 0 2px #000 inset;
+		}
+
+		.mana_fill{
+			height: 100%;
+			width: 100%;
+			background: #0054a2;
+			box-shadow: 0 0 2px #000 inset;
+		}
+
+		.numb {
+    		position: absolute;
+    		top: 0px;
+    		left: 3px;
+    		height: 10px;
+    		line-height: 10px;
+    		color: #fff;
+    		font-size: 10px;
+    		font-family: Verdana, Arial, Helvetica, sans-serif;
+    		font-weight: bold;
+		}
+
+		.first-punch-position{
+			position: relative;
+			left: 100%;
+			margin-top: 5px;
+			line-height: 15px;
+		}
+
+		.second-punch-position{
+			position: static;
+			left: 5%;
+			margin-top: 5px;
+			line-height: 15px;
+		}
+
+		.blocks-position{
+			position: relative;
+			margin-top: 5px;
+			left: -60%;
+			line-height: 15px;
+		}
+
+		input[type=radio]{
+			border: 0px;
+			width: 17px;
+			height: 17px;
+		}
+
+		input[type=checkbox]{
+			border: 0px;
+			width: 17px;
+			height: 17px;
+		}
+
+		div.fight-log {
+			line-height: 5px;
+		}
+
+		div.unit{
+			display: table;
+			width: 100%;
+		}
+
+		div.unit-name{
+			color: blue;
+			font-weight: bold;
+			text-align: center;
+			font-size: 16px;
+			word-wrap: normal;
+			display: table-cell;
+			text-align: right;
+			vertical-align: middle;
+			width: auto;
+		}
+
+		div.unit-lvl{
+			color: black;
+			font-weight: bold;
+			text-align: left;
+			font-size: 16px;
+			display: table-cell;
+			vertical-align: middle;
+			padding-left: 5px;
+			width: auto;
+		}
+
+		.stock{
+			width: 60px;
+			height: 35px;
+		}
+
+	</style>
+	<!--Babel CDN load
+	<script _type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.js"></script>
+	-->
+	<!--jQuery CDN load
+	-->
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<!--Bootstrap CDN load
+	-->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
+			integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+			crossorigin="anonymous">
+	</script>
+
+</head>
+
+<body>
+
+	<div id="main-content" class="container-fluid">
+
+		<div class="row">
+			<div id="header" style="width: 100%; height: 30px">
+				<button onclick="restartGame()" style="border-color: red;">Start/Restart !!!</button>
+			</div>
+		</div>
+
+		<div class="row" style="background-color: darkgrey; overflow: auto; height: 55%">
+			<!--Блок шмота и текущего состояния Игрока (Левая часть страницы)
+			-->
+			<div id="player-container" class="col-3">
+				<table id="player" border="0" style="width: 260px; height: 320px; margin-top: 5px">
+					<!--Шапка скилов + Логин и Уровень персонажа-->
+					<tr height="1%">
+						<div class="unit">
+							<div id="u-name" class="unit-name"></div>
+							<div id="u-lvl" class="unit-lvl"></div>
+						</div>
+					</tr>
+
+					<!--шмот и Изображение персонажа -->
+					<tr>
+						<!--Левая часть со шмотом (Шлем, Наручи, Кольца х 3шт., Первое оружие, Броня, Пояс)-->
+						<td width="25%">
+							<table id="player-left-part" border="0" width="100%" height="100%">
+								<tr height="17%">
+									<td>
+										<img id="player-helmet" class="equipment-size" src="img/helmet.gif" />
+									</td>
+								</tr>
+								<tr height="12%">
+									<td>
+										<img id="player-bracers" class="equipment-size" src="img/bracer.gif" />
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<table border="0" width="100%" height="100%">
+											<td>
+												<img id="player-ring-1" class="equipment-size" src="img/rings.gif" />
+											</td>
+											<td>
+												<img id="player-ring-2" class="equipment-size" src="img/rings.gif" />
+											</td>
+											<td>
+												<img id="player-ring-3" class="equipment-size" src="img/rings.gif" />
+											</td>
+										</table>
+									</td>
+								</tr>
+								<tr height="24%">
+									<td>
+										<img id="player-weapon-1" class="equipment-size" src="img/weapon-1.gif" />
+									</td>
+								</tr>
+								<tr height="25%">
+									<td>
+										<img id="player-armor" class="equipment-size" src="img/armor.gif" />
+									</td>
+								</tr>
+								<tr height="12%">
+									<td>
+										<img id="player-belt" class="equipment-size" src="img/belt.gif" />
+									</td>
+								</tr>
+							</table>
+						</td>
+
+						<!--Центральная часть с изображением персонажа-->
+						<td width="50%">
+							<table id="player-center-part" border="0" width="100%" height="100%">
+								<tr height="5%">
+									<td>
+										<div class="hp_line">
+											<div id="player-hp-level-text" class="numb"></div>
+											<div id="player-hp-level-line" class="hp_fill"></div>
+										</div>
+										<div class="mana_line">
+											<div id="player-mp-level-text" class="numb"></div>
+											<div id="player-mp-level-line" class="mana_fill">
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<img id="player-main-image" class="equipment-size" src="img/0.gif" />
+									</td>
+								</tr>
+								<tr height="10%">
+									<td>
+									</td>
+								</tr>
+							</table>
+						</td>
+
+						<!--Правая часть со шмотом (Серьги, Ожерелье, Перчатки, Кольца х3шт., Второе оружие, Штаны, Ботинки)-->
+						<td width="25%">
+							<table id="player-right-part" border="0" width="100%" height="100%">
+								<tr height="8%">
+									<td>
+										<img id="player-earrings" class="equipment-size" src="img/earrings.gif" />
+									</td>
+								</tr>
+								<tr height="9%">
+									<td>
+										<img id="player-necklace" class="equipment-size" src="img/necklace.gif" />
+									</td>
+								</tr>
+								<tr height="12%">
+									<td>
+										<img id="player-gloves" class="equipment-size" src="img/gloves.gif" />
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<table border="0" width="100%" height="100%">
+											<td>
+												<img id="player-ring-4" class="equipment-size" src="img/rings.gif" />
+											</td>
+											<td>
+												<img id="player-ring-5" class="equipment-size" src="img/rings.gif" />
+											</td>
+											<td>
+												<img id="player-ring-6" class="equipment-size" src="img/rings.gif" />
+											</td>
+										</table>
+									</td>
+								</tr>
+								<tr height="24%">
+									<td>
+										<img id="player-weapon-2" class="equipment-size" src="img/shield.gif" />
+									</td>
+								</tr>
+								<tr height="25%">
+									<td>
+										<img id="player-pants" class="equipment-size" src="img/pants.gif" />
+									</td>
+								</tr>
+								<tr height="12%">
+									<td>
+										<img id="player-boots" class="equipment-size" src="img/boots.gif" />
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+
+					<!--Футер-->
+					<tr height="1%">
+					</tr>
+				</table>
+			</div>
+
+			<!--Блок ударов, блоков и приемов Игрока (Ценральная часть страницы) 
+			-->
+			<div class="col-6" style="margin-top: 10px;">
+
+				<div class="container-fluid">
+
+					<form id="punch-form">
+						<div class="row">
+							<table border="0" style="width: 100%; margin-top: 15px">
+								<tr>
+									<td id="stock-1" class="stock">
+										<img id="st-1" src="img/clear-slot.gif" class="stock" />
+									</td>
+									<td id="stock-2" class="stock">
+										<img id="st-2" src="img/clear-slot.gif" class="stock" />
+									</td>
+									<td id="stock-3" class="stock">
+										<img id="st-3" src="img/clear-slot.gif" class="stock" />
+									</td>
+									<td id="stock-4" class="stock">
+										<img id="st-4" src="img/clear-slot.gif" class="stock" />
+									</td>
+									<td id="stock-5" class="stock">
+										<img id="st-5" src="img/clear-slot.gif" class="stock" />
+									</td>
+									<td id="stock-6" class="stock">
+										<img id="st-6" src="img/clear-slot.gif" class="stock" />
+									</td>
+									<td id="stock-7" class="stock">
+										<img id="st-7" src="img/clear-slot.gif" class="stock" />
+									</td>
+									<td id="stock-8" class="stock">
+										<img id="st-8" src="img/clear-slot.gif" class="stock" />
+									</td>
+									<td id="stock-9" class="stock">
+										<img id="st-9" src="img/clear-slot.gif" class="stock" />
+									</td>
+									<td id="stock-10" class="stock">
+										<img id="st-10" src="img/clear-slot.gif" class="stock" />
+									</td>
+								</tr>
+							</table>
+						</div>
+
+						<div class="row align-items-start justify-content-md-center">
+							<div class="col col-md-auto">
+								<b>Удары:</b>
+							</div>
+
+							<div class="col col-md-auto">
+								<b>Блоки:</b>
+							</div>
+						</div>
+
+						<div class="row justify-content-md-center">
+							<div class="col">
+								<div class="first-punch-position">
+									<input type="radio" name="first-strike" value="1" checked="checked"> <br>
+									<input type="radio" name="first-strike" value="2"> <br>
+									<input type="radio" name="first-strike" value="3"> <br>
+									<input type="radio" name="first-strike" value="4"> <br>
+									<input type="radio" name="first-strike" value="5"> <br>
+								</div>
+							</div>
+
+							<div class="col">
+								<div class="second-punch-position">
+									<input type="radio" name="second-strike" value="1" checked="checked">Голова<br>
+									<input type="radio" name="second-strike" value="2">Корпу<br>
+									<input type="radio" name="second-strike" value="3">Живот<br>
+									<input type="radio" name="second-strike" value="4">Пояс<br>
+									<input type="radio" name="second-strike" value="5">Ноги<br>
+								</div>
+							</div>
+
+							<div class="col">
+								<div class="blocks-position">
+									<input type="radio" name="protect" value="1" checked="checked">Голова-Корпус<br>
+									<input type="radio" name="protect" value="2">Корпус-Живот<br>
+									<input type="radio" name="protect" value="3">Живот-Пояс<br>
+									<input type="radio" name="protect" value="4">Пояс-Ноги<br>
+									<input type="radio" name="protect" value="5">Ноги-Голова<br>
+								</div>
+							</div>
+						</div>
+
+						<div class="row" style="height: 20px">
+						</div>
+
+						<div class="row justify-content-md-center">
+							<div class="col-4">
+								<input type="checkbox" id="random_move">Random...
+								<input type="submit" id="punch" value="! Бей !" onclick="fight()">
+							</div>
+						</div>
+
+						<div class="row">
+							<table id="magic-list" border="0" style="width: 100%; margin-top: 15px">
+							</table>
+						</div>
+					</form>
+
+				</div>
+
+			</div>
+
+			<!--Блок шмота и текущего состояния Противника (Правая часть страницы)
+			-->
+			<div id="enemy-container" class="col-3">
+				<table id="enemy" border="0" height="320px" width="260px">
+					<!--Шапка скилов + Логин и уровень персонажа-->
+					<tr height="1%">
+						<div class="unit">
+							<div id="e-name" class="unit-name"></div>
+							<div id="e-lvl" class="unit-lvl"></div>
+						</div>
+					</tr>
+
+					<!--шмот и Изображение персонажа -->
+					<tr>
+						<!--Левая часть со шмотом (Шлем, Наручи, Кольца х 3шт., Первое оружие, Броня, Пояс)-->
+						<td width="25%">
+							<table id="enemy-left-part" border="0" width="100%" height="100%">
+								<tr height="17%">
+									<td>
+										<img id="enemy-helmet" class="equipment-size" src="img/helmet.gif" />
+									</td>
+								</tr>
+								<tr height="12%">
+									<td>
+										<img id="enemy-bracers" class="equipment-size" src="img/bracer.gif" />
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<table border="0" width="100%" height="100%">
+											<td>
+												<img id="enemy-ring-1" class="equipment-size" src="img/rings.gif" />
+											</td>
+											<td>
+												<img id="enemy-ring-2" class="equipment-size" src="img/rings.gif" />
+											</td>
+											<td>
+												<img id="enemy-ring-3" class="equipment-size" src="img/rings.gif" />
+											</td>
+										</table>
+									</td>
+								</tr>
+								<tr height="24%">
+									<td>
+										<img id="enemy-weapon-1" class="equipment-size" src="img/weapon-1.gif" />
+									</td>
+								</tr>
+								<tr height="25%">
+									<td>
+										<img id="enemy-armor" class="equipment-size" src="img/armor.gif" />
+									</td>
+								</tr>
+								<tr height="12%">
+									<td>
+										<img id="enemy-belt" class="equipment-size" src="img/belt.gif" />
+									</td>
+								</tr>
+							</table>
+						</td>
+
+						<!--Центральная часть с изображением персонажа-->
+						<td width="50%">
+							<table id="enemy-center-part" border="0" width="100%" height="100%">
+								<tr height="5%">
+									<td>
+										<div class="hp_line">
+											<div id="enemy-hp-level-text" class="numb"></div>
+											<div id="enemy-hp-level-line" class="hp_fill"></div>
+										</div>
+										<div class="mana_line">
+											<div id="enemy-mp-level-text" class="numb"></div>
+											<div id="enemy-mp-level-line" class="mana_fill">
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<img id="enemy-main-image" class="equipment-size" src="img/0.gif" />
+									</td>
+								</tr>
+								<tr>
+									<td>
+									</td>
+								</tr>
+							</table>
+						</td>
+
+						<!--Правая часть со шмотом (Серьги, Ожерелье, Перчатки, Кольца х3шт., Второе оружие, Штаны, Ботинки)-->
+						<td width="25%">
+							<table id="enemy-right-part" border="0" width="100%" height="100%">
+								<tr height="8%">
+									<td>
+										<img id="enemy-earrings" class="equipment-size" src="img/earrings.gif" />
+									</td>
+								</tr>
+								<tr height="9%">
+									<td>
+										<img id="enemy-necklace" class="equipment-size" src="img/necklace.gif" />
+									</td>
+								</tr>
+								<tr height="12%">
+									<td>
+										<img id="enemy-gloves" class="equipment-size" src="img/gloves.gif" />
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<table border="0" width="100%" height="100%">
+											<td>
+												<img id="enemy-ring-4" class="equipment-size" src="img/rings.gif" />
+											</td>
+											<td>
+												<img id="enemy-ring-5" class="equipment-size" src="img/rings.gif" />
+											</td>
+											<td>
+												<img id="enemy-ring-6" class="equipment-size" src="img/rings.gif" />
+											</td>
+										</table>
+									</td>
+								</tr>
+								<tr height="24%">
+									<td>
+										<img id="enemy-weapon-2" class="equipment-size" src="img/shield.gif" />
+									</td>
+								</tr>
+								<tr height="25%">
+									<td>
+										<img id="enemy-pants" class="equipment-size" src="img/pants.gif" />
+									</td>
+								</tr>
+								<tr height="12%">
+									<td>
+										<img id="enemy-boots" class="equipment-size" src="img/boots.gif" />
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+
+					<!--Футер-->
+					<tr height="1%">
+					</tr>
+				</table>
+			</div>
+
+		</div>
+
+	</div>
+
+	<div id="bottom-data" class="container-fluid" style="margin-top: 5px">
+		<div class="row">
+			<div id="log" class="col-10 fight-log"
+				   		  style="margin-top: 10px;">
+
+				<p id="fight-log"
+				   style="text-align: center;
+			   		  font-weight: bold;">Лог Боя:</p>
+
+				<div id="text-area" style="font-size: 16px">
+
+				</div>
+			</div>
+
+			<div id="chat-list" class="col-2">
+
+			</div>
+		</div>
+	</div>
+
+	<script defer
+			type="text/javascript"
+			src="src/fighting.js">
+	</script>
+</body>
+
+</html>

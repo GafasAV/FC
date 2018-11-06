@@ -1,0 +1,20 @@
+//
+//Функция вычисления уровня крита
+//Формула:(Кол-во интуиции * фикс-е значение)
+//Значение задается в функции
+function getCriticalLevel(int){
+
+    let int_c = parseInt(int);
+
+    if(int_c <= 0){
+        return 0;
+    }
+    //Кол-во очков крита за 1ед. Интуиции
+    let add_points = 8;
+    //Бонус в процентах к криту за каждые N Интуиции
+    let percent_bonus = parseInt(int_c / 20) * 10;
+
+    let critical_lvl = int_c * add_points;
+
+    return parseInt(critical_lvl + parseInt(critical_lvl * percent_bonus / 100));
+}

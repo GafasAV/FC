@@ -1,0 +1,15 @@
+{
+  "esversion": 6,
+  "globals": {
+    "esversion": 6,
+    "angular": false,
+    "inject": false,
+    "driver": false,
+    "protractor": false,
+    "$": false,
+    "$$": false,
+    "element": false,
+    "by": false,
+    "list": false
+  }
+}
